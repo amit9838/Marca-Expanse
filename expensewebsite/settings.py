@@ -26,9 +26,13 @@ SECRET_KEY = 'django-insecure-^7-s==96(_itpw6ugf!+vd&#bc5%!$c0t&!-i(w4j!z2k2ox2c
 DEBUG = True
 
 ALLOWED_HOSTS = [
-        '0.0.0.0'
-        'marca-expenses.herokuapp.com',
-        '127.0.0.1'
+           '*',
+           '0.0.0.0'
+            'http://marca-expenses.herokuapp.com/',
+            'https://marca-expenses.herokuapp.com/',
+            'marca-expenses.herokuapp.com',
+            'marca-expenses.herokuapp.com/',
+            '127.0.0.1',
 ]
 
 
