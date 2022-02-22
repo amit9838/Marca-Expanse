@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
         '0.0.0.0'
-        'marca-ecpense.herokuapp.com',
+        'marca-expense.herokuapp.com',
         '127.0.0.1'
 ]
 
