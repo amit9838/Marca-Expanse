@@ -156,7 +156,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 # STATICFILES_DIRS = [os.path.join(BASE_DIR, 'expensewebsite/static')]
-# STATIC_ROOT = os.path.join(BASE_DIR,'static')
+STATIC_ROOT = os.path.join(BASE_DIR,'static')
 
 
 # Default primary key field type
@@ -177,3 +177,6 @@ EMAIL_HOST : 'smtp.gmail.com'
 DEFAULT_FROM_EMAIL: os.environ.get('EMIAL_HOST_UESER')
 # EMAIL_HOST_PASSWORD: '9838659023'
 EMAIL_HOST_PASSWORD: os.environ.get('EMAIL_HOST_PASSWORD')
+
+import django_on_heroku
+django_on_heroku.settings(locals())
