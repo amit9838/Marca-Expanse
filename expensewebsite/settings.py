@@ -10,8 +10,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+from email.message import Message
 from pathlib import Path
+from django.contrib import messages
 import os
+from django.core.mail import *
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -34,7 +37,7 @@ ALLOWED_HOSTS = [
             'marca-expenses.herokuapp.com/',
             '127.0.0.1',
 ]
-
+CORS_ORIGIN_ALLOW_ALL = True
 
 # Application definition
 
@@ -46,9 +49,20 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'expenses',
+    # 'authentication',
+    'userpreferences',
+    'userincome',
+    'corsheaders',
+    'rest_framework',
 ]
 
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10
+}
+
 MIDDLEWARE = [
+
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -56,6 +70,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
 
 ROOT_URLCONF = 'expensewebsite.urls'
@@ -76,20 +92,28 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'expensewebsite.wsgi.application'
+# WSGI_APPLICATION = 'expensewebsite.wsgi.application'
 
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': os.environ.get('DB_NAME'),
+#         'USER': os.environ.get('DB_USER'),
+#         'PASSWORD':os.environ.get('DB_PASSWORD'),
+#         'HOST':os.environ.get('DB_HOST'),
+        
+#     }
+# }
+
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('DB_NAME'),
-        'USER': os.environ.get('DB_USER'),
-        'PASSWORD':os.environ.get('DB_PASSWORD'),
-        'HOST':os.environ.get('DB_HOST'),
-        
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -118,7 +142,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 
@@ -139,3 +163,17 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+MESSAGE_TAGS = {
+    messages.ERROR : "danger",
+}
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS:True
+EMAIL_PORT:587
+EMAIL_HOST : 'smtp.gmail.com'
+# EMAIL_HOST_USER: os.environ.get('EMIAL_HOST_USER')
+# EMAIL_HOST_USER: 'amitchaudhary0539@gmail.com'
+DEFAULT_FROM_EMAIL: os.environ.get('EMIAL_HOST_UESER')
+# EMAIL_HOST_PASSWORD: '9838659023'
+EMAIL_HOST_PASSWORD: os.environ.get('EMAIL_HOST_PASSWORD')
